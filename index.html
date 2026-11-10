@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Juve 2026• &#129313;</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Big+Shoulders+Display:wght@700;900&amp;family=Share+Tech+Mono&amp;display=swap">
+<style>
+:root{--bg:#08110d;--fg:#eef3ea;--card:#0f1a15;--mut:#8ea89a;--line:#1f3128;--acc:#ffc53d;--onacc:#2a1d00;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:500 16px/1.4 "Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:14px}
+.layout{max-width:460px;margin:0 auto;display:grid;gap:12px}.main,.side{min-width:0}
+@media(min-width:900px){.layout{max-width:1100px;grid-template-columns:auto minmax(340px,1fr);gap:22px;align-items:start}.main{width:max(320px,min(46vw,calc((100vh - 140px)*.643)))}}
+.snd{max-width:460px;margin:0 auto 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 6px 6px 12px;font:600 14px "Barlow",system-ui,sans-serif}
+.snd button{padding:7px 14px;border-radius:9px;border:1px solid var(--acc);background:var(--acc);color:var(--onacc);font-weight:700}
+@media(min-width:900px){.snd{max-width:1100px}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin:12px 0}
+.panel h2{font:900 20px/1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;color:var(--acc)}
+.add{display:grid;grid-template-columns:1fr auto;gap:6px}.add input{grid-column:1/-1}
+input[type=text],select{font:500 14px "Barlow",system-ui,sans-serif;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px;min-width:0}
+.add .go{padding:7px 14px;font-size:14px}
+.dl{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:5px;max-height:260px;overflow:auto}
+.dl li{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:14px}.dl li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.x{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;width:30px;height:30px;font-size:18px;line-height:1}
+h1{font:900 32px/1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;margin:0 0 10px;letter-spacing:.02em}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;font:400 11px "Share Tech Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.stat b{display:block;font:900 32px/1 "Big Shoulders Display",Impact,sans-serif;letter-spacing:0;color:#ff5a3c}
+.stage{position:relative}
+canvas{width:100%;aspect-ratio:360/560;display:block;border-radius:14px;border:1px solid var(--line);touch-action:none}
+.banner{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%) scale(.8);font:900 48px/1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}
+.banner.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.chips{display:flex;gap:8px;margin:10px 0 4px}
+button{font:600 15px "Barlow",system-ui,sans-serif;cursor:pointer}
+.chip{flex:1;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.chip.off{opacity:.4}.chip.on{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc) inset}
+.row{display:grid;grid-template-columns:104px 1fr;align-items:center;gap:8px;margin:8px 0;color:var(--mut)}
+.row b{color:var(--fg);font-family:"Share Tech Mono",monospace}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.btns{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin:10px 0}
+.go,.rs{padding:12px;border-radius:12px;font-weight:700;border:1px solid var(--line)}
+.go{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.rs{background:var(--card);color:var(--fg)}
+.hint{font-size:13px;color:var(--mut)}
+.disc{max-width:460px;margin:18px auto 4px;padding-top:10px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.45;color:var(--mut);text-align:center}
+.disc a{color:var(--acc);text-decoration:none;font-weight:600}
+.disc a:hover{text-decoration:underline}
+@media(min-width:900px){.disc{max-width:1100px}}
+kbd{border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--card);font:400 12px "Share Tech Mono",monospace}
+.bub{position:absolute;max-width:176px;padding:6px 9px;border-radius:10px;background:#fff;color:#111;font:500 12px/1.25 "Barlow",system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.35);transform:translate(-50%,-100%);opacity:0;pointer-events:none;transition:opacity .2s;z-index:2}
+.bub.dn{transform:translate(-50%,0)}.bub.show{opacity:1}
+.bub b{display:block;font:400 10px "Share Tech Mono",monospace;color:#0038b8}
+</style></head><body>
+<div class="wrap"><div class="snd"><span id="st">🔇 Best with sound on</span><button id="bm" type="button">Unmute</button></div><div class="layout"><div class="main">
+<h1>Juve <span style="color:var(--acc)">2026</span> 🤡</h1>
+<div class="stats">
+<div class="stat"><b id="nSh">0</b>Shots</div>
+<div class="stat"><b id="nSc">0</b>Scored</div>
+<div class="stat"><b id="nMi">0</b>Missed</div>
+<div class="stat"><b id="nXg">0.00</b>Moral xG</div>
+</div>
+<div class="stage"><canvas id="c"></canvas><div class="banner" id="bn">GOAL!</div><div class="bub" id="bub"><b></b><span></span></div></div>
+</div><div class="side"><div class="chips" id="chips"></div>
+<div class="row"><span>Power <b id="vp">55</b></span><input type="range" id="sp" min="0" max="100" value="55"></div>
+<div class="row"><span>Curve <b id="vu">30</b></span><input type="range" id="su" min="-100" max="100" value="30"></div>
+<div class="row"><span>Direction <b id="vd">70°</b></span><input type="range" id="sd" min="0" max="180" value="70"></div>
+<div class="btns"><button class="go" id="bs">Shoot</button><button class="rs" id="br">Reset ball</button></div>
+<section class="panel"><h2>Defenders</h2>
+<form class="add" id="af"><input type="text" id="an" maxlength="18" placeholder="Twitter username or your fav players" autocomplete="off"><select id="ak"></select><button class="go" type="submit">Add</button></form>
+<ul class="dl" id="dl"></ul></section>
+<p class="hint">Drag any player to move them: strikers, defenders, the keeper. Tap a player to hear them out. Tap empty pitch to move the active striker. To shoot, drag back from the ball (or anywhere on empty grass) and let go, slingshot-style. Rwanda Congo Mali and Woltemade always miss, wherever they shoot from. The pink-flag backline can’t stop anything either. Add your fav players to the pitch and see what happens. <kbd>Space</kbd> shoots, and <kbd>←</kbd> <kbd>→</kbd> aim.</p></div></div>
+<footer class="disc"><b>Disclaimer:</b> This is a non-commercial fan parody &amp; satire project created purely for fun and football banter—don’t take it seriously. I do not own any rights to any football clubs, player names, likenesses, or audio clips; all trademarks and copyrights belong to their respective owners. Built by <a href="https://x.com/drjuventini" target="_blank" rel="noopener noreferrer">@drjuventini</a>.</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id),cnv=$('c'),g=cnv.getContext('2d');
+const W=360,H=560,GY=34,GL=140,GR=220,D=Math.max(2,Math.min(window.devicePixelRatio||1,3));
+cnv.width=W*D;cnv.height=H*D;g.scale(D,D);
+
+const ORIG_DEF={
+otavioprop:{n:'otavioprop',k:'il',q:["Otavio-prop? I’m a fat jobless moroccan"]},
+fibbix:{n:'fibbix',k:'il',q:["I’m busy gimmicking."]},
+billgeneral236:{n:'billgeneral236',k:'il',q:["I’m a Grinch, not Sciera."]},
+drjuventini:{n:'drjuventini',k:'il',q:["I’m irrelevant, lol."]}
+};
+
+const PINK_DEF={
+cambiasso:{n:'cambiASSo',k:'pk',q:["cambiASSo? I invert into midfield, into attack, and right out of position.","Pep Guardiola called me once. I’ve been dribbling in my own six-yard box ever since.","90th minute? Time to try a nutmeg at the edge of our penalty area."]},
+lloydkelly:{n:'lloyd kelly',k:'pk',q:["Giuntoli paid €20M for me. Newcastle fans drove me to the airport themselves.","Premier League proven? Proven at watching the ball roll past me.","Wait, this isn’t the J-Medical VIP lounge?"]},
+kalulu:{n:'kalulu',k:'pk',q:["Milan gave me away for peanuts, and I’m still the only one here with working hamstrings.","I left Milanello to escape chaos and walked straight into a circus.","One-man backline? Don’t worry, I’m used to covering for three statues."]},
+rugani:{n:'rugani',k:'pk',q:["I’ve survived Allegri, Sarri, Pirlo, Allegri again, Motta... I’ll outlive you all.","Loan me to Ajax, loan me to Cagliari, I always boomerang back to Turin.","10 years at Juve, 5 Scudetti, 0 tackles needed. That’s efficiency."]}
+};
+
+const npc=[
+{n:'cambiASSo',x:80,y:122,r:12,o:0,k:'pk',q:PINK_DEF.cambiasso.q},
+{n:'lloyd kelly',x:150,y:138,r:12,o:2,k:'pk',q:PINK_DEF.lloydkelly.q},
+{n:'kalulu',x:220,y:138,r:12,o:4,k:'pk',q:PINK_DEF.kalulu.q},
+{n:'rugani',x:290,y:122,r:12,o:6,k:'pk',q:PINK_DEF.rugani.q},
+{n:'Di Gregorio',x:180,y:60,r:13,o:0,g:1,k:'il',q:["Worst keeper in Juve history? I prefer ‘generous host’.","I’m not a wall; I’m a beaded curtain.","Buffon would have saved that. Buffon would have saved this whole game.","Clean sheets? I only do those in the laundry.","They miss every single shot, and I still dive the wrong way.","Hands like Wi-Fi in the stadium—zero connection.","Call me ‘Di Generoso’, everyone gets a goal except our strikers."]}
+];
+
+const st=[
+{n:'Rwanda Congo Mali',x:95,y:400,c:'#f59e0b',q:["It wasn’t a miss. It was a long pass to the stands.","My xG is huge. My goals are zero. Both numbers are correct.","The goal keeps moving. I’ve checked.","Call me Robin Hood—I rob the xG and give the ball to the poor fans in the upper tier.","I don’t miss, I’m just testing stadium structural integrity."]},
+{n:'Woltemade',x:265,y:470,c:'#111',q:["Wolte-made it? No. Wolte-missed-it.","The net looked big from the tunnel.","I’d score from anywhere, if the pitch stopped moving.","Call me Robin Hood—I rob the xG and give the ball to the poor fans in the upper tier.","I don’t miss, I’m just testing stadium structural integrity."]}
+];
+const MISS_BN=['WIDE!','OVER THE BAR!','CORNER FLAG IN DANGER!','TURIN AIRSPACE VIOLATION!','xG MERCHANT!','CALL THE CARABINIERI!'];
+let rc=null,lt=null,jk=null,mlk=null,shake=0,conf=[],cflags=[{x:12,y:GY,hit:0,vx:0,vy:0,rot:0},{x:W-12,y:GY,hit:0,vx:0,vy:0,rot:0}],fan={x:180,y:12,hit:0,vx:0,vy:0,rot:0},xg=0,chantMul=1,amb=null,ambDone=false,tips=true,pull=null,scored=0,dpOn=false,cs=null,kd={dir:1,p:0},trail=[],act=0,power=55,curve=30,dir=98,shots=0,missed=0,mode='idle',bt,mt,b={x:0,y:0,vx:0,vy:0,res:false,lift:false};
+const isDP=()=>st[act]===dp;
+function hasMot(){return npc.some(p=>p.mot&&!p.out)}
+function addConf(x,y){for(let i=0;i<28;i++){const a=Math.random()*Math.PI*2,s=1.5+Math.random()*4.5;conf.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.5,c:['#ffc53d','#fff','#111','#ff4da6'][i%4],t:55+Math.random()*25|0})}}
+function ui(){$('vp').textContent=power;$('vu').textContent=curve;$('vd').textContent=Math.round(dir)+'°';
+$('sp').value=power;$('su').value=curve;$('sd').value=Math.round(dir);
+const m0=hasMot();$('nSh').textContent=shots;$('nSc').textContent=m0?'0':scored;$('nMi').textContent=m0?'0':missed;$('nXg').textContent=m0?'0.00':xg.toFixed(2)}
+function say(t){const e=$('bn');e.textContent=t;e.style.fontSize=t.length>16?'28px':'';e.style.whiteSpace=t.length>16?'normal':'';e.style.width=t.length>16?'92%':'';e.style.textAlign='center';e.classList.add('show');clearTimeout(mt);mt=setTimeout(()=>e.classList.remove('show'),t.length>16?2600:1500)}
+const bub=$('bub');let bt2;
+function talk(p,t){bub.firstChild.textContent=p.n;bub.lastChild.textContent=t||p.q[Math.random()*p.q.length|0];
+const dn=p.y<160;bub.classList.toggle('dn',dn);bub.style.left=Math.max(26,Math.min(74,(p.rx??p.x)/W*100))+'%';bub.style.top=(p.y+(dn?24:-20))/H*100+'%';
+bub.classList.add('show');clearTimeout(bt2);bt2=setTimeout(()=>bub.classList.remove('show'),2800)}
+const chips=$('chips');
+st.forEach((s,i)=>{const e=document.createElement('button');e.className='chip';e.textContent=s.n;e.onclick=()=>pick(i);chips.appendChild(e)});
+function pick(i){act=i;[...chips.children].forEach((e,j)=>e.classList.toggle('on',j===act))}
+pick(1);ui();
+function shoot(){if(mode!=='idle')return;shots++;tips=false;snd('kick');if(isDP()||rig()){if(!isDP())say('MERDA DEFENDERS ON THE PITCH!!! ALERT!!');rocket(isDP()?15:10);return}const s=3+power*.12,a=dir*Math.PI/180;
+b.vx=Math.cos(a)*s;b.vy=-Math.sin(a)*s;b.res=false;b.lift=false;b.tk=0;b.rc=0;mode='fly';ui()}
+
+const dp={n:'Del Piero',x:-30,y:430,num:10,q:["Numero dieci. Watch this.","Score from anywhere? It’s in my contract. Clause ten.","Rocket? Call it a Del-Pierorocket.","Black and white and read all over the net.","Pinturicchio is back."]};
+function jersey(x,y,r,rot,num){g.save();g.translate(x,y);g.rotate(rot||0);g.beginPath();g.arc(0,0,r,0,7);g.save();g.clip();g.fillStyle='#fff';g.fillRect(-r,-r,2*r,2*r);g.fillStyle='#111';for(let i=0;i<6;i+=2)g.fillRect(-r+i*r/3,-r,r/3,2*r);g.restore();
+if(num){g.font='900 13px "Big Shoulders Display",Impact,sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=3;g.strokeStyle='#fff';g.strokeText(num,0,1);g.fillStyle='#111';g.fillText(num,0,1);g.textBaseline='alphabetic'}g.restore()}
+function tip(t,x,y){y+=Math.sin(performance.now()/300)*2;g.font='600 10px Barlow,system-ui,sans-serif';const w=g.measureText(t).width+14;g.fillStyle='rgba(255,197,61,.96)';g.beginPath();g.roundRect?g.roundRect(x-w/2,y-9,w,17,8):g.rect(x-w/2,y-9,w,17);g.fill();g.fillStyle='#2a1d00';g.textAlign='center';g.fillText(t,x,y+3)}
+function fxDraw(){if(tips&&mode==='idle'){st.slice(0,2).forEach(p=>tip('Drag me ↔',p.x<180?p.x-52:p.x+52,p.y));tip('Drag defenders & keeper too',180,176);tip('Pull back from the ball & release to shoot',Math.max(105,Math.min(245,b.x)),b.y-20)}
+if(pull&&mode==='idle'){g.strokeStyle='#ffc53d';g.lineWidth=3;g.beginPath();g.moveTo(b.x,b.y);g.lineTo(pull.x,pull.y);g.stroke();g.fillStyle='#ffc53d';g.beginPath();g.arc(pull.x,pull.y,6,0,7);g.fill();label(power+'%',pull.x,pull.y-12)}
+trail.forEach((p,i)=>{g.fillStyle='rgba(255,'+(90+i*10)+',30,'+(i/trail.length*.7)+')';g.beginPath();g.arc(p[0],p[1],2+i*.4,0,7);g.fill()});
+conf.forEach(c=>{g.fillStyle=c.c;g.fillRect(c.x-2,c.y-2,4,4)});
+if(cs&&cs.fl>0){g.strokeStyle='#ffd23d';g.lineWidth=3;for(let k=0;k<8;k++){const a=k*Math.PI/4,r1=8+(14-cs.fl)*2,r2=r1+10;g.beginPath();g.moveTo(cs.hx+Math.cos(a)*r1,cs.hy+Math.sin(a)*r1);g.lineTo(cs.hx+Math.cos(a)*r2,cs.hy+Math.sin(a)*r2);g.stroke()}label('SLAP!',cs.hx,cs.hy-24)}
+if(cs&&cs.sw){g.strokeStyle='rgba(255,255,255,.9)';g.lineWidth=4;g.beginPath();g.arc(dp.x,dp.y,24,cs.dir>0?-1:Math.PI-1,cs.dir>0?1:Math.PI+1);g.stroke()}}
+function startDP(){snd('dp');mode='cut';st.forEach(s=>{s.rot=0;s.vr=0;s.vx=0;s.vy=0});dp.x=-30;dp.y=st[0].y;
+cs={t:0,fl:0,sw:0,dir:1,a:{x:st[0].x,y:st[0].y},b:{x:st[1].x,y:st[1].y}};st.push(dp)}
+function slap(s,vx,vy){snd('slap');shake=10;s.vx=vx;s.vy=vy;s.vr=.6*Math.sign(vx);cs.fl=14;cs.hx=s.x+(vx>0?-14:14);cs.hy=s.y-6;say('SLAP!');
+talk(s,vx>0?"Ow! That hand has won Scudetti.":"My face! I only wanted to score once.")}
+function cutStep(){const c=cs,t=++c.t,A=c.a,B=c.b,L=(a,b,u)=>a+(b-a)*Math.max(0,Math.min(1,u));
+if(t===1)talk(dp,"Excuse me, legend coming through.");
+if(t<=50){dp.x=L(-30,A.x-28,t/50);dp.y=L(A.y,A.y,1);c.dir=1}
+else if(t<=70){c.sw=t>=56&&t<=64;dp.x=A.x-28;dp.y=A.y;if(t===60)slap(st[0],9,-3)}
+else if(t<=110){c.sw=false;c.dir=-1;dp.x=L(A.x-28,B.x+28,(t-70)/40);dp.y=L(A.y,B.y,(t-70)/40)}
+else if(t<=130){c.sw=t>=116&&t<=124;dp.x=B.x+28;dp.y=B.y;if(t===120)slap(st[1],-9,-3)}
+else if(t<=220){c.sw=false;dp.x=L(B.x+28,FK.x,(t-130)/90);dp.y=L(B.y,FK.y,(t-130)/90)}
+else return endDP();
+for(const s of[st[0],st[1]])if(s.vx||s.vy){s.x=Math.max(14,Math.min(W-14,s.x+s.vx));s.y=Math.max(60,Math.min(H-16,s.y+s.vy));s.vx*=.93;s.vy*=.93;s.rot+=s.vr;s.vr*=.96}
+if(c.fl>0)c.fl--}
+function endDP(){dpOn=true;cs=null;const e=document.createElement('button');e.className='chip';e.textContent='Del Piero';e.onclick=()=>pick(2);chips.appendChild(e);pick(2);
+addConf(dp.x,dp.y);mode='idle';say('DEL PIERO 10');talk(dp)}
+function rocket(sp){sp=sp||15;b.sp=sp;const a=dir*Math.PI/180;b.vx=Math.cos(a)*sp;b.vy=-Math.sin(a)*sp;b.res=false;b.tk=0;b.f=0;b.tx=GL+14+Math.random()*(GR-GL-28);kd.dir=b.tx<180?1:-1;kd.p=0;trail=[];mode='rocket';ui()}
+function specialIntercept(){
+const vl=npc.find(p=>p.vlah&&!p.out&&Math.hypot((p.rx??p.x)-b.x,p.y-b.y)<p.r+12);
+if(vl&&!b.vHit){b.vHit=1;b.vx=b.x<180?-11:11;b.vy=-3.5;b.res=false;b.rc=0;mode='fly';snd('kick');shake=6;say('VLAHO-MISS FIRST TOUCH! 🚩');talk(vl,"That was a cushioned lay-off to the corner flag!");return true}
+if(!isDP()&&hasMot()&&b.vy<0&&b.y<=250){const mp=npc.find(p=>p.mot&&!p.out);b.vy=0;b.vx=b.x<180?5.5:-5.5;b.res=true;b.rc=0;mode='fly';missed++;xg+=.5;snd('kick');say('SIDEWAYS PASS! 0-0 LOCKED 🤝');if(mp)talk(mp);ui();return true}
+const lk=npc.find(p=>p.lak&&!p.out&&b.y<=GY+20&&Math.abs((p.rx??p.x)-b.x)<p.r+12);
+if(lk&&!isDP()){b.vy=6.5;b.vx=(Math.random()-.5)*6;b.y=GY+21;b.res=true;b.rc=0;mode='fly';missed++;xg+=.99;snd('punch');shake=9;say('LAKAKA MASTERCLASS! 🧱');talk(lk);ui();return true}
+return false}
+function rocketStep(){b.f++;const dx=b.tx-b.x,dy=GY+4-b.y,d=Math.hypot(dx,dy)||1;
+b.vx+=(dx/d*b.sp-b.vx)*.09;b.vy+=(dy/d*b.sp-b.vy)*.09;b.x+=b.vx;b.y+=b.vy;if(isDP())trail.push([b.x,b.y]);if(trail.length>14)trail.shift();
+kd.p=Math.min(1,kd.p+.05);
+if(specialIntercept())return;
+if(!b.tk){const q=npc.find(p=>!p.out&&!p.ghost&&Math.hypot((p.rx??p.x)-b.x,p.y-b.y)<p.r+10);if(q){b.tk=1;maybe(q)}}
+if(b.y<=GY+2||b.f>240){b.x=b.tx;b.y=GY-6;b.vx=b.vy=0;trail=[];scored++;addConf(b.x,GY);snd('net');snd('goal');say(isDP()?'GOAL!':'EVEN HE SCORED!');if(!b.tk)maybe(gk);ui();done()}}
+
+const gk=npc.find(p=>p.g),KITS={pk:'Pink flag',it:'Italy flag',bw:'Black & white',il:'Israel flag',ib:'Blue & black',rb:'Red & black'};
+const GEN=[u=>`${u} here. I’m a Twitter account, not a centre-back.`,u=>`Ratio’d by the ball. ${u} has left the chat, and the back line.`,u=>`${u}’s tackle success rate: 100%. (Source: trust me.)`,u=>`The line is breached. ${u} is still drafting a reply.`,u=>`${u}? More like ${u}-nowhere-to-be-seen.`];
+function bars(x,y,r,c){g.save();g.beginPath();g.arc(x,y,r,0,7);g.clip();c.forEach((col,i)=>{g.fillStyle=col;g.fillRect(x-r+i*2*r/c.length,y-r,2*r/c.length+.5,2*r)});g.restore()}
+function dung(x,y){g.save();g.fillStyle='#6b3a12';g.strokeStyle='#2b1505';g.lineWidth=1.2;
+[[0,0,8,3.2],[0,-3.2,6,2.6],[0,-6,3.6,2]].forEach(e=>{g.beginPath();g.ellipse(x+e[0],y+e[1],e[2],e[3],0,0,7);g.fill();g.stroke()});
+g.beginPath();g.moveTo(x-1.5,y-7.5);g.quadraticCurveTo(x+1,y-10.5,x+2,y-7.2);g.fill();g.stroke();
+g.strokeStyle='rgba(140,95,40,.85)';g.lineWidth=1;[-4,0,4].forEach((dx,i)=>{const s=Math.sin(performance.now()/220+i)*1.2;g.beginPath();g.moveTo(x+dx,y-10);g.quadraticCurveTo(x+dx+s,y-13,x+dx-s,y-16);g.stroke()});g.restore()}
+function pinkFlag(n,x,y,r,p){
+g.beginPath();g.arc(x,y,r,0,7);g.fillStyle='#ff4da6';g.fill();
+g.lineWidth=1.5;g.strokeStyle='#fff';g.stroke();
+if(p&&p.koop)tip('€60M NO REFUND 🧾',x,y-r-14);
+if(p&&p.bar)label('AAAAH MY SHIN! 🌀',x,y-r-16);
+label(n,x,y+r+10)}
+function kit(k,n,x,y,r,p){if(k==='il')return israel(n,x,y,r);if(k==='pk')return pinkFlag(n,x,y,r,p);
+const B=a=>[a,'#111',a,'#111',a,'#111'],C={it:['#009246','#fff','#ce2b37'],bw:['#fff','#111','#fff','#111','#fff','#111'],ib:B('#0a3a8c'),rb:B('#d11a2a')}[k]||['#fff'];
+bars(x,y,r,C);g.beginPath();g.arc(x,y,r,0,7);g.lineWidth=1.5;g.strokeStyle='#fff';g.stroke();
+if(p&&p.chie){g.fillStyle='#f8fafc';g.fillRect(x-r,y-r*.55,2*r,5);g.strokeStyle='#dc2626';g.lineWidth=1.2;g.beginPath();g.moveTo(x-3,y-r*.55);g.lineTo(x+2,y-r*.55+5);g.stroke()}
+if(p&&p.hakan){g.fillStyle='#ef4444';g.beginPath();g.arc(x,y,3.8,0,7);g.fill()}
+if(k==='ib')dung(x,y-r-4);
+if(p&&p.koop)tip('€60M NO REFUND 🧾',x,y-r-14);
+if(p&&p.bar)label('AAAAH MY SHIN! 🌀',x,y-r-16);
+label(n,x,y+r+10)}
+function kitSel(v){const e=document.createElement('select');for(const k in KITS){const o=document.createElement('option');o.value=k;o.textContent=KITS[k];e.append(o)}e.value=v;return e}
+function renderDL(){const l=$('dl');l.innerHTML='';npc.forEach(p=>{const li=document.createElement('li'),nm=document.createElement('span'),sel=kitSel(p.k||'il');
+nm.textContent=(p.g?'GK · ':'')+p.n;sel.onchange=()=>{p.k=sel.value;if(p.k==='ib')say('MERDA DEFENDERS ON THE PITCH!!! ALERT!!')};li.append(nm,sel);
+if(!p.g){const x=document.createElement('button');x.type='button';x.className='x';x.textContent='×';x.title='Remove';x.onclick=()=>{npc.splice(npc.indexOf(p),1);bub.classList.remove('show');renderDL();ui()};li.append(x)}
+l.append(li)});ui()}
+$('ak').replaceWith(Object.assign(kitSel('pk'),{id:'ak'}));renderDL();
+$('af').onsubmit=e=>{e.preventDefault();const v=$('an').value.trim().replace(/^@+/,'');if(!v)return;if(npc.length>=13)return say('PITCH IS FULL');
+const key=v.toLowerCase().replace(/[^a-z0-9]/g,'');
+const orig=ORIG_DEF[key],pink=PINK_DEF[key],irr=isIrr(v);
+const bast=isBast(v),laut=isLaut(v),alg=isAlg(v),mlkOn=isMlk(v),vlah=isVlah(v),lak=isLak(v),koop=isKoop(v),luiz=isLuiz(v),hak=isHakan(v),bar=isBar(v),mot=isMot(v),chie=isChie(v);
+const nm=orig?orig.n:pink?pink.n:vlah?'Dušan Vlaho-miss':lak?'Lakaka 🧱':koop?'Flop-meiners (€60M)':luiz?'Douglas Who-iz? 👻':hak?'Clown-hanoglu 🤡':bar?'Barella 🌀':mot?'Thiago Draw-tta 🤝':chie?'Chiellini 🦍':v;
+const p={n:nm,x:laut?180:lak?180:alg?38:mot?180:mlkOn?180:(40+Math.random()*280|0),y:laut?126:lak?GY+9:alg?200:mot?245:mlkOn?220:(95+Math.random()*80|0),r:lak?15:12,o:Math.random()*6,
+k:orig?orig.k:pink?pink.k:(bast||laut||lak||hak||bar)?'ib':(alg||mlkOn||vlah||koop||luiz||mot||chie)?'bw':$('ak').value,
+alg:alg?1:0,vlah:vlah?1:0,lak:lak?1:0,koop:koop?1:0,ghost:luiz?1:0,hakan:hak?1:0,bar:bar?1:0,mot:mot?1:0,chie:chie?1:0,
+q:orig?orig.q:pink?pink.q:alg?["HALMA! HALMA!","Cortomuso! 1-0 is peak entertainment.","Who needs tactics when you have a parked bus?"]:
+laut?["I thought the goal was in the stratosphere.","Penalty specialist! Check orbit for the ball."]:
+vlah?["First touch? I thought that was a pass to the corner flag.","€12M net a year and my shin has a trampoline built in.","Hold-up play means holding up the entire attack, right?"]:
+lak?["Best defender in Champions League final history!","Why clear the ball when I can block my own teammates?","Goal line technology? No, Lakaka technology."]:
+koop?["Atalanta kept the receipt, right? Asking for Giuntoli.","€60M for cardio and pointing at spaces.","Gasperini’s special juice wore off on the highway to Turin."]:
+luiz?["Wait, I’m registered in the squad?","You can’t blame me if I’m invisible.","Currently streaming from the J-Medical waiting room."]:
+hak?["Ref! A blade of grass tripped me! Penalty for Inter!","Best midfielder in the world (if penalties count as open play).","I heard a whistle! Is it my turn to take a pen?"]:
+bar?["AAAAH MY SHIN! A sniper in the Curva Sud got me!","I’ve rolled 400 metres today and the match hasn’t started.","Ref! Look at my arms waving! Book somebody!"]:
+mot?["Possession is 99%, goals are 0. Perfect balance.","Why shoot when we can pass sideways to the keeper?","0-0 is not a scoreline, it’s a philosophy."]:
+chie?["It is the history of the Merda.","A 1-0 win with a bandaged head is better than 5-0.","You don’t pass. Not in my penalty box, not in my stadium."]:
+GEN.map(f=>f(v))};
+npc.push(p);$('an').value='';renderDL();
+if(irr){p.out=true;p.irrToss=1;p.vx=p.x<180?-6.5:6.5;p.vy=-5.5;snd('punch');shake=8;bub.classList.remove('show');say('IRRELEVANT CLUB!');return}
+if(bast){bastQ.push(p)}
+else if(laut){lt={p,t:0,bx:180,by:102,vy:0,tr:[]}}
+else if(alg){jk={x:p.x,y:p.y,vx:4.2,vy:-3.2,rot:0,t:0};say('HALMA! HALMA! 🧥');talk(p,"HALMA! Park the bus in front of the goal!")}
+else if(mlkOn){mlk={p,t:0}}
+else if(vlah){say('FIRST TOUCH TO CORNER FLAG! 🥾');talk(p)}
+else if(lak){say('LAKAKA ON THE GOAL LINE! 🧱');talk(p)}
+else if(koop){say('€60M RECEIPT NOT FOUND! 🧾');talk(p)}
+else if(luiz){say('GHOST SPOTTED ON PITCH! 👻');talk(p)}
+else if(hak){say('BEGGING FOR A PENALTY! 🤡');talk(p)}
+else if(bar){say('BARREL ROLL ACTIVATED! 🌀');talk(p)}
+else if(mot){say('ANOTHER 0-0 MASTERCLASS! 🤝');talk(p);ui()}
+else if(chie){say("IT'S THE HISTORY OF THE MERDA! 🦍");talk(p)}
+else{if(p.k==='ib')say('MERDA DEFENDERS ON THE PITCH!!! ALERT!!');talk(p)}};
+cnv.addEventListener('pointercancel',()=>{pd=null;pull=null});
+function maybe(p){if(Math.random()<.4)talk(p)}
+function ambStep(){if(!amb)return;amb.x+=1.9;const p=Math.max(0,Math.min(1,(amb.x+260)/870));if(AU.siren)AU.siren.volume=VOL.siren/100*Math.pow(Math.sin(Math.PI*p),1.5);
+if(amb.mlk&&!amb.picked&&amb.x+48>=amb.mlk.x){amb.picked=1;const i=npc.indexOf(amb.mlk);if(i>=0){npc.splice(i,1);renderDL()}talk({n:'J-Medical Stretcher',x:amb.x+48,y:amb.y,q:["VIP Platinum regular loaded! Back to J-Medical we go."]})}
+if(!amb.said&&amb.x>90&&!amb.mlk){amb.said=1;talk({n:'Milik (driver)',x:200,y:255,q:["Relax, I know the way. I’m a regular."]})}if(amb.x>W+250){amb=null;stopSnd('siren')}}
+function ambDraw(){if(!amb)return;const f=Math.floor(performance.now()/150)%2,c1=f?'#ff2d2d':'#2d6bff',c2=f?'#2d6bff':'#ff2d2d';
+g.save();g.translate(amb.x,amb.y);g.fillStyle='rgba(0,0,0,.25)';g.fillRect(3,-14,96,34);
+g.fillStyle='#fff';g.fillRect(0,-17,96,34);g.strokeStyle='#b9c3bd';g.lineWidth=1;g.strokeRect(0,-17,96,34);
+g.fillStyle='#dfe6e1';g.fillRect(3,-14,60,22);g.fillStyle='#27323a';g.fillRect(85,-14,8,28);
+g.fillStyle='#d62828';g.fillRect(0,9,63,8);g.fillStyle='#fff';g.font='700 7px Barlow,system-ui,sans-serif';g.textAlign='center';g.fillText('+ J MEDICAL',31,15.5);
+[12,31,50].forEach(px=>jersey(px,-3,7,0));jersey(76,0,7,0);
+[[93,-15,c1],[93,15,c2]].forEach(l=>{g.globalAlpha=.35;g.fillStyle=l[2];g.beginPath();g.arc(l[0],l[1],9,0,7);g.fill();g.globalAlpha=1;g.beginPath();g.arc(l[0],l[1],3,0,7);g.fill()});
+g.restore();label(amb.picked?'Milik, Yildiz, Locatelli, Thuram':'Yildiz, Locatelli, Thuram',amb.x+32,amb.y-24);label('Milik (driver)',amb.x+76,amb.y+32)}
+/* SOUNDS: put these files in a "sounds" folder next to this HTML. A missing file just stays silent.
+   VOL = volume per sound in % (0-100). The page starts muted; players only get a mute/unmute button. */
+const SND={chant:'sounds/chant.mp3',miss:'sounds/miss.mp3',siren:'sounds/siren.mp3',dp:'sounds/delpiero.mp3',goal:'sounds/goal.mp3',kick:'sounds/kick.mp3',slap:'sounds/slap.mp3',net:'sounds/net.mp3',punch:'sounds/punch.mp3'},
+VOL={chant:15,miss:40,siren:40,dp:100,goal:20,kick:70,slap:100,net:75,punch:90},AU={};
+let muted=true;
+function snd(k){if(muted)return;try{const a=AU[k]||(AU[k]=new Audio(SND[k]));a.loop=k==='chant'||k==='siren';a.volume=VOL[k]/100;if(k!=='chant')a.currentTime=0;a.play().catch(()=>{})}catch(e){}}
+function stopSnd(k){const a=AU[k];if(a){a.pause();a.currentTime=0}}
+function setMute(m){muted=m;$('st').textContent=m?'🔇 Best with sound on':'🔊 Sound on';$('bm').textContent=m?'Unmute':'Mute';if(m)Object.keys(AU).forEach(stopSnd);else snd('chant')}
+$('bm').onclick=()=>setMute(!muted);setMute(true);
+function fear(){return isDP()?((pull&&pull.d>=14)||mode==='rocket'?1:.3):0}
+function audioStep(){const a=AU.chant;if(!a||muted)return;const tg=(mode==='cut'||isDP())?0.25:1;chantMul+=Math.max(-.004,Math.min(.004,tg-chantMul));a.volume=VOL.chant/100*chantMul}
+const FK={x:130,y:205},bastQ=[];
+function lev(a,b){const d=[];for(let i=0;i<=a.length;i++)d[i]=[i];for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]}
+function isBast(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');if(n.length>=6&&lev(n,'bastoni')<=2)return true;for(let L=6;L<=8;L++)for(let i=0;i+L<=n.length;i++)if(lev(n.slice(i,i+L),'bastoni')<=1)return true;return false}
+function isLaut(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('lautaro')||n.includes('martinez')||(n.length>=6&&lev(n,'lautaro')<=2)}
+function isAlg(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('allegri')||n==='max'||n.includes('cortomuso')||(n.length>=6&&lev(n,'allegri')<=2)}
+function isMlk(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('milik')||n.includes('arkadiusz')||(n.length>=5&&lev(n,'milik')<=1)}
+function isVlah(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('vlaho')||n.includes('dusan')||n.includes('blahovic')||(n.length>=6&&lev(n,'vlahovic')<=2)}
+function isLak(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('lukaku')||n.includes('lakaka')||n.includes('romelu')||(n.length>=5&&lev(n,'lukaku')<=2)}
+function isKoop(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('koop')||n.includes('teun')||n.includes('flopmeiners')}
+function isLuiz(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('douglas')||n.includes('luiz')||n.includes('whoiz')}
+function isHakan(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('calha')||n.includes('hakan')||n.includes('clownhanoglu')}
+function isBar(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('barella')||n.includes('nicolo')||(n.length>=6&&lev(n,'barella')<=2)}
+function isMot(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('motta')||n.includes('thiago')||n.includes('drawtta')}
+function isChie(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');return n.includes('chiellini')||n.includes('giorgio')||n.includes('kingkong')||(n.length>=7&&lev(n,'chiellini')<=2)}
+const IRR_LIST=['napoli','fiorentina','viola','como','kvara','kvaratskhelia','osimhen','politano','lobotka','anguissa','dilorenzo','mctominay','meret','raspadori','buongiorno','gilmour','neres','spinazzola','rrahmani','olivera','simeone','ngonge','conte','delaurentiis','insigne','mertens','hamsik','koulibaly','kean','moisekean','degea','dodo','gosens','gudmundsson','colpani','mandragora','comuzzo','kayode','biraghi','beltran','ikone','sottil','adli','bove','cataldi','parisi','terracciano','palladino','commisso','italiano','nicopaz','paz','cutrone','fabregas','cesc','sergiroberto','strefezza','belotti','dacunha','audero','reina','varane','goldaniga','dossena','perrone','caqueret','diao'];
+function isIrr(v){const n=v.toLowerCase().replace(/[^a-z]/g,'');if(!n||isLak(v))return false;return IRR_LIST.some(k=>n===k||n.includes(k)||(n.length>=5&&k.length>=5&&lev(n,k)<=1))}
+function hasBus(){return npc.some(p=>p.alg&&!p.out)}
+function rig(){return npc.some(p=>(p.k==='ib'||isBast(p.n))&&!p.out)}
+function rcStep(){if(!rc){if(!bastQ.length)return;rc={p:bastQ.shift(),t:0,fl:0}}const c=rc,p=c.p,t=++c.t;
+if(t===1||t===90)say('RED CARD!');
+if(t===180){snd('punch');shake=12;p.out=true;p.vx=p.x<180?-3.5:3.5;p.vy=-4.5;c.fl=60;c.hx=p.rx??p.x;c.hy=p.y;say('SENT OFF!')}
+if(t>180){p.x+=p.vx;p.y+=p.vy;p.vy+=.08;if(t>270&&(p.x<-40||p.x>W+40||p.y>H+40||p.y<-40)){const i=npc.indexOf(p);if(i>=0)npc.splice(i,1);renderDL();rc=null;return}}
+if(c.fl>0)c.fl--}
+function rcDraw(){if(!rc)return;const c=rc,p=c.p;
+if(c.t<180){const x=p.rx??p.x,y=p.y-(p.k==='ib'?46:30)+Math.sin(c.t/4)*2;g.fillStyle='#e11d2a';g.fillRect(x-6,y-9,12,17);g.strokeStyle='#fff';g.lineWidth=1.5;g.strokeRect(x-6,y-9,12,17)}
+if(c.fl>0){g.strokeStyle='#ffd23d';g.lineWidth=3;for(let k=0;k<8;k++){const a=k*Math.PI/4,r1=6+Math.min(28,(60-c.fl)*1.2),r2=r1+9;g.beginPath();g.moveTo(c.hx+Math.cos(a)*r1,c.hy+Math.sin(a)*r1);g.lineTo(c.hx+Math.cos(a)*r2,c.hy+Math.sin(a)*r2);g.stroke()}label('POW!',c.hx,c.hy-22)}}
+
+function extrasStep(){
+if(shake>0)shake*=.82;if(shake<.3)shake=0;
+for(let i=conf.length-1;i>=0;i--){const c=conf[i];c.x+=c.vx;c.y+=c.vy;c.vy+=.12;c.vx*=.98;if(--c.t<=0)conf.splice(i,1)}
+cflags.forEach((cf,i)=>{
+ if(cf.hit>0){cf.hit--;cf.x+=cf.vx;cf.y+=cf.vy;cf.vy+=.18;cf.rot+=.25;if(cf.hit===0){cf.x=i?W-12:12;cf.y=GY;cf.rot=0}}
+ else if(mode==='fly'&&Math.hypot(b.x-cf.x,b.y-cf.y)<22){cf.hit=75;cf.vx=i?3.5:-3.5;cf.vy=-3.5;snd('punch');shake=6;say('CORNER FLAG OBLITERATED! 🚩')}
+});
+if(lt){const t=++lt.t,p=lt.p;
+ if(t===1){say('LAUTARO PENALTY!');talk(p,"Stand back, penalty specialist Lautaro is here.")}
+ if(t<60){p.y=134-(t/60)*18;p.x=180+Math.sin(t/2)*2}
+ if(t===60){snd('kick');snd('miss');lt.vy=-9.5;xg+=.99;missed++;ui();say('BALL SPOTTED PASSING THE ISS 🛰️');talk(p,"I meant to pass it to the International Space Station!")}
+ if(t>60){lt.by+=lt.vy;lt.tr.push([lt.bx,lt.by]);if(lt.tr.length>16)lt.tr.shift();if(t>195)lt=null}
+}
+if(jk){jk.t++;if(jk.t<75){jk.x+=jk.vx;jk.y+=jk.vy;jk.vx*=.96;jk.vy*=.96;jk.rot+=.28}else if(jk.t>220)jk=null}
+if(mlk){const t=++mlk.t,p=mlk.p;
+ if(t===1)talk(p,"Fresh out of J-Medical! Time to lock down this defence—");
+ if(t<45){p.x+=Math.sin(t/3)*1.2;p.y-=.35}
+ if(t===45){snd('miss');p.out=true;p.fall=1;say('MILIK HAMSTRING GONE (0.7s) 🚑');talk(p,"OW! My knee! Summon my ambulance!");amb={x:-260,y:p.y,said:0,mlk:p};snd('siren');mlk=null}
+}
+const ch=npc.find(p=>p.chie&&!p.out);
+if(ch){const tg=npc.find(p=>!p.g&&p.k==='ib'&&!p.out&&(!rc||rc.p!==p));
+ if(tg){const tx=tg.rx??tg.x,dx=tx-ch.x,dy=tg.y-ch.y,d=Math.hypot(dx,dy)||1;
+  ch.x+=dx/d*2.6;ch.y+=dy/d*2.6;
+  if(d<22){snd('punch');shake=10;tg.out=true;tg.chieToss=1;tg.vx=tx<180?-4.5:4.5;tg.vy=-4.8;say("IT'S THE HISTORY OF THE MERDA! 🦍");talk(ch,"Not on my pitch! Back to Milan you go!")}
+ }
+}
+for(let i=npc.length-1;i>=0;i--){const p=npc[i];if(p.chieToss||p.irrToss){p.x+=p.vx;p.y+=p.vy;p.vy+=.14;if(p.x<-40||p.x>W+40||p.y>H+40||p.y<-40){npc.splice(i,1);renderDL()}}}
+if(fan.hit>0){fan.hit--;fan.x+=fan.vx;fan.y+=fan.vy;fan.vy+=.15;fan.rot+=.22;if(fan.y>14){fan.y=14;fan.vy=0;fan.vx*=.85}if(fan.hit===0){fan.rot=0;fan.y=12}}
+else if(mode==='fly'&&b.vy<0){fan.x+=Math.max(-2.2,Math.min(2.2,(Math.max(30,Math.min(W-30,b.x))-fan.x)*.08))}
+}
+
+function extrasDraw(t){
+cflags.forEach((cf,i)=>{
+ g.save();g.translate(cf.x,cf.y);g.rotate(cf.rot);
+ g.strokeStyle='#fff';g.lineWidth=1.8;g.beginPath();g.moveTo(0,2);g.lineTo(0,-14);g.stroke();
+ g.fillStyle='#ffc53d';g.beginPath();g.moveTo(0,-14);g.lineTo((i?-1:1)*(9+Math.sin(t/140)*2),-10);g.lineTo(0,-6);g.closePath();g.fill();
+ g.restore();
+});
+const fx=fan.x,fy=fan.y;
+g.save();g.translate(fx,fy);g.rotate(fan.rot);
+g.strokeStyle='#fff';g.lineWidth=1.8;g.fillStyle='#ffc53d';
+g.beginPath();g.arc(0,-6,3.5,0,7);g.fill();g.stroke();
+g.beginPath();g.moveTo(0,-2.5);g.lineTo(0,4);g.moveTo(-4,0);g.lineTo(4,-1);g.moveTo(0,4);g.lineTo(-3,9);g.moveTo(0,4);g.lineTo(3,9);g.stroke();
+g.restore();
+if(fan.hit>0){for(let i=0;i<3;i++){const a=performance.now()/150+i*2.1;g.fillStyle='#ffc53d';g.beginPath();g.arc(fx+Math.cos(a)*8,fy-11+Math.sin(a)*3,2,0,7);g.fill()}label('ROW Z FAN 🤕',fx,fy+21)}
+if(hasMot()){g.save();g.strokeStyle='rgba(255,197,61,.65)';g.setLineDash([4,4]);g.lineWidth=2;g.beginPath();g.moveTo(12,250);g.lineTo(W-12,250);g.stroke();g.setLineDash([]);label('MOTTA 0-0 PASS ZONE 🤝',180,244);g.restore()}
+if(hasBus()){const bx=136,by=GY-6;g.save();g.fillStyle='#ffc53d';g.strokeStyle='#2a1d00';g.lineWidth=1.5;g.fillRect(bx,by,88,22);g.strokeRect(bx,by,88,22);
+g.fillStyle='#1f3128';for(let i=0;i<5;i++)g.fillRect(bx+6+i*15,by+3,11,8);
+g.fillStyle='#111';[bx+16,bx+72].forEach(wx=>{g.beginPath();g.arc(wx,by+22,4,0,7);g.fill()});
+g.fillStyle='#2a1d00';g.font='900 9px "Big Shoulders Display",Impact,sans-serif';g.textAlign='center';g.fillText('ALLEGRI CORTOMUSO BUS',bx+44,by+19);g.restore()}
+if(jk){g.save();g.translate(jk.x,jk.y);g.rotate(jk.rot);g.fillStyle='#18181b';g.strokeStyle='#fff';g.lineWidth=1.2;
+g.beginPath();g.moveTo(-9,-7);g.lineTo(9,-7);g.lineTo(12,8);g.lineTo(-12,8);g.closePath();g.fill();g.stroke();
+g.fillStyle='#d62828';g.fillRect(-1.5,-5,3,10);g.restore();label('Allegri’s Jacket',jk.x,jk.y+18)}
+if(lt){
+ lt.tr.forEach((p,i)=>{g.fillStyle='rgba(56,189,248,'+(i/lt.tr.length*.8)+')';g.beginPath();g.arc(p[0],p[1],2+i*.35,0,7);g.fill()});
+ if(lt.t>60){const sx=40+(lt.t-60)*2.2,sy=22;g.save();g.translate(sx,sy);g.fillStyle='#94a3b8';g.fillRect(-6,-3,12,6);g.fillStyle='#38bdf8';g.fillRect(-18,-5,10,10);g.fillRect(8,-5,10,10);g.restore();label('ISS 🛰️',sx,sy+15)}
+ if(lt.by>-30){g.fillStyle='#fff';g.strokeStyle='#111';g.lineWidth=1.2;g.beginPath();g.arc(lt.bx,lt.by,6,0,7);g.fill();g.stroke()}
+}
+}
+
+function reset(){if(mode==='cut')return;mode='idle';b.vHit=0;clearTimeout(bt);$('bn').classList.remove('show')}
+function done(){clearTimeout(bt);b.vHit=0;if(missed>=2&&!ambDone){ambDone=true;amb={x:-260,y:300,said:0};snd('siren');say('INJURY CRISIS!')}if(missed>=5&&!dpOn&&!rig()){startDP();return}mode='done';bt=setTimeout(()=>{if(mode==='done'){mode='idle';kd.p=0}},350)}
+function step(){
+if(mode==='cut')return cutStep();
+if(mode==='rocket')return rocketStep();
+if(mode!=='fly')return;
+if(b.res&&++b.rc>28)return done();
+const r=curve*.00015,c=Math.cos(r),n=Math.sin(r);
+[b.vx,b.vy]=[(b.vx*c-b.vy*n)*.993,(b.vx*n+b.vy*c)*.993];b.x+=b.vx;b.y+=b.vy;
+if(!b.res&&specialIntercept())return;
+if(!b.tk){const q=npc.find(p=>!p.out&&!p.ghost&&Math.hypot((p.rx??p.x)-b.x,p.y-b.y)<p.r+10);if(q){b.tk=1;maybe(q)}}
+if(!b.res&&hasBus()&&b.vy<0&&b.y<=GY+20&&b.x>132&&b.x<228){
+ b.res=true;b.vy=Math.abs(b.vy)*.75;b.vx=(Math.random()-.5)*5;b.y=GY+21;missed++;xg+=1.15;snd('punch');shake=8;say('BLOCKED BY ALLEGRI BUS! 🚌');
+ const al=npc.find(p=>p.alg);if(al)talk(al,"Halmone! Cortomuso 1-0 is football heritage.");ui();return}
+if(!b.res&&b.vy<0&&b.y<=GY+2){b.res=true;
+ const mb=MISS_BN[Math.random()*MISS_BN.length|0];
+ if(b.x>GL-4&&b.x<GR+4){
+  if(Math.random()<.5){const left=b.x<180;b.x=left?GL:GR;b.vy=Math.abs(b.vy)*.6;b.vx=(left?-1:1)*(2+Math.random()*3);b.y=GY+5;shake=7;say('OFF THE POST!')}
+  else{b.lift=true;fan.x=Math.max(24,Math.min(W-24,b.x));fan.hit=90;fan.vx=b.vx*.3;fan.vy=-2.8;snd('punch');shake=6;say(Math.random()<.5?'FAN IN ROW Z CONCUSSED! 🤕':mb)}
+ }else{fan.x=Math.max(24,Math.min(W-24,b.x));fan.hit=90;fan.vx=b.vx*.3;fan.vy=-2.8;snd('punch');shake=6;say(Math.random()<.5?'FAN IN ROW Z CONCUSSED! 🤕':mb)}
+ if(!b.tk){b.tk=1;maybe(b.x>GL-4&&b.x<GR+4?gk:st[act])}
+ missed++;xg+=.85+Math.random()*.55;snd('miss');ui()}
+if(Math.hypot(b.vx,b.vy)<1){if(!b.res){b.res=true;missed++;xg+=.65;snd('miss');say('FALLS SHORT!');ui()}done()}
+else if(b.x<-20||b.x>W+20||b.y<-20||b.y>H+20){if(!b.res){b.res=true;missed++;xg+=.75;snd('miss');say(MISS_BN[Math.random()*MISS_BN.length|0]);ui()}done()}
+}
+function path(x,y,a,pw,cu,n,gap){const s=3+pw*.12,r=cu*.00015,c=Math.cos(r),sn=Math.sin(r),o=[];
+let vx=Math.cos(a)*s,vy=-Math.sin(a)*s;
+for(let i=0;i<n;i++){[vx,vy]=[(vx*c-vy*sn)*.993,(vx*sn+vy*c)*.993];x+=vx;y+=vy;if(i%gap===0)o.push([x,y]);if(Math.hypot(vx,vy)<1)break}return o}
+function star(x,y,s){g.strokeStyle='#0038b8';g.lineWidth=1.1;
+for(const o of[-90,90]){g.beginPath();for(let i=0;i<3;i++){const a=(o+i*120)*Math.PI/180;g.lineTo(x+Math.cos(a)*s,y+Math.sin(a)*s)}g.closePath();g.stroke()}}
+function label(t,x,y){g.font='600 10px Barlow,system-ui,sans-serif';g.textAlign='center';g.lineWidth=3;g.strokeStyle='rgba(0,0,0,.65)';g.strokeText(t,x,y);g.fillStyle='#fff';g.fillText(t,x,y)}
+function israel(n,x,y,r){
+g.save();g.beginPath();g.arc(x,y,r,0,7);g.clip();
+g.fillStyle='#fff';g.fillRect(x-r,y-r,2*r,2*r);
+g.fillStyle='#0038b8';g.fillRect(x-r,y-r*.68,2*r,r*.22);g.fillRect(x-r,y+r*.46,2*r,r*.22);
+star(x,y,r*.36);g.restore();
+g.beginPath();g.arc(x,y,r,0,7);g.lineWidth=1.5;g.strokeStyle='#0038b8';g.stroke();
+label(n,x,y+r+10)}
+function draw(t){
+g.save();if(shake>0)g.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
+for(let i=0;i<14;i++){g.fillStyle=i%2?'#2c8a47':'#31964e';g.fillRect(0,i*40,W,40)}
+g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=2;
+g.strokeRect(12,GY,W-24,H-GY-12);g.strokeRect(70,GY,220,116);
+g.beginPath();g.arc(180,126,40,.6435,Math.PI-.6435);g.stroke();
+g.beginPath();g.arc(180,H-12,46,Math.PI,2*Math.PI);g.stroke();
+g.fillStyle='rgba(230,40,40,.35)';g.fillRect(120,GY,120,50);g.strokeStyle='#ff4d4d';g.strokeRect(120,GY,120,50);
+g.fillStyle='rgba(255,255,255,.18)';g.fillRect(GL,14,GR-GL,GY-14);g.strokeStyle='#fff';g.strokeRect(GL,14,GR-GL,GY-14);
+g.fillStyle='#fff';[GL,GR].forEach(x=>{g.beginPath();g.arc(x,GY,4,0,7);g.fill()});
+extrasDraw(t);
+npc.forEach(p=>{const F=fear(),sx=F*2.4*Math.sin(t/20+p.o*9),sy=F*1.6*Math.cos(t/17+p.o*5);
+p.rx=p.bar?40+((t*.11+p.o*40)%(W-80)):p.lak?180+Math.sin(t/280)*28:p.x+(p.fall||p.chie||p.irrToss?0:Math.sin(t/(p.g?500:700)+p.o)*(p.g?16:4))+(p.g?kd.dir*52*(1-Math.pow(1-kd.p,3)):0)+sx;
+const py=p.y+(p.ghost?Math.sin(t/220)*5:0)+sy;
+g.save();if(p.ghost)g.globalAlpha=.38;
+if(p.fall||p.bar||p.irrToss){g.translate(p.rx,py);g.rotate(p.bar||p.irrToss?t/90:1.35);kit(p.k||'il',p.n,0,0,p.r,p)}else kit(p.k||'il',p.n,p.rx,py,p.r,p);
+g.restore();
+if(F>.5){g.fillStyle='rgba(120,200,255,.9)';g.beginPath();g.arc(p.rx+p.r*.8,p.y-p.r*.6+((t/60+p.o*3)%10),1.6,0,7);g.fill()}});
+
+if(mode==='idle'){b.x=st[act].x;b.y=st[act].y-17}
+if(mode==='idle'){g.fillStyle='rgba(255,255,255,.85)';
+ path(b.x,b.y,dir*Math.PI/180,power,curve,60,4).forEach(p=>{g.beginPath();g.arc(p[0],p[1],1.8,0,7);g.fill()})}
+st.forEach((s,i)=>{jersey(s.x,s.y,s===dp?14:12,s.rot,s.num);g.lineWidth=2;g.strokeStyle='#fff';
+ if(i===act){g.setLineDash([3,3]);g.beginPath();g.arc(s.x,s.y,17,0,7);g.stroke();g.setLineDash([])}
+ label(s.n,s.x,s.y+27)});
+fxDraw();const sc=b.lift?Math.max(1,Math.min(2,1+(GY-b.y)/30)):1,lf=sc>1;
+g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(b.x+2,b.y+(lf?7*sc:3),5*sc,3*sc,0,0,7);g.fill();
+const by=b.y-(lf?4*sc:0);
+g.fillStyle='#fff';g.strokeStyle='#222';g.lineWidth=1.2;g.beginPath();g.arc(b.x,by,6*sc,0,7);g.fill();g.stroke();
+g.fillStyle='#222';g.beginPath();g.arc(b.x,by,2*sc,0,7);g.fill();
+g.restore();
+}
+let last=0,acc=0;
+function frame(t){const dt=Math.min(50,t-last);last=t;acc+=dt;while(acc>=16.67){acc-=16.67;step();ambStep();audioStep();rcStep();extrasStep()}draw(t);ambDraw();rcDraw();requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+const pt=e=>{const r=cnv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}};
+let pd=null;
+cnv.addEventListener('pointerdown',e=>{if(mode==='cut')return;cnv.setPointerCapture(e.pointerId);const p=pt(e);const bl=mode==='idle'&&Math.hypot(b.x-p.x,b.y-p.y)<18;pd={sx:e.clientX,sy:e.clientY,drag:false,bl,hit:bl?null:[...st,...npc].find(q=>!q.out&&Math.hypot((q.rx??q.x)-p.x,q.y-p.y)<26)}});
+cnv.addEventListener('pointermove',e=>{if(!pd)return;
+if(!pd.drag&&Math.hypot(e.clientX-pd.sx,e.clientY-pd.sy)>8)pd.drag=true;
+if(pd.drag&&pd.hit){tips=false;const p=pt(e),q=pd.hit,s=st.includes(q);const o=(q.rx??q.x)-q.x;q.x=Math.max(14,Math.min(W-14,p.x-o));q.y=Math.max(s?60:22,Math.min(H-16,p.y));if(s)pick(st.indexOf(q))}else if(pd.drag&&mode==='idle'){const p=pt(e),dx=p.x-b.x,dy=p.y-b.y,d=Math.hypot(dx,dy),a=Math.atan2(dy,-dx)*180/Math.PI,k=d>100?100/d:1;tips=false;power=Math.round(Math.min(100,d));dir=a<0?(-dx>0?0:180):a;pull={x:b.x+dx*k,y:b.y+dy*k,d};ui()}});
+cnv.addEventListener('pointerup',e=>{if(pd&&pd.drag&&!pd.hit&&pull){if(pull.d>=14&&mode==='idle')shoot();pull=null;pd=null;return}pull=null;
+if(pd&&!pd.drag&&pd.hit){const q=pd.hit,o=st.indexOf(q);if(o>=0)pick(o);if(q.hakan)say('BEGGING FOR A PENALTY! 🤡');talk(q)}else if(pd&&!pd.drag&&!pd.bl&&mode==='idle'){const p=pt(e),o=-1;
+ if(o>=0)pick(o);else{const s=st[act];s.x=Math.max(14,Math.min(W-14,p.x));s.y=Math.max(60,Math.min(H-16,p.y))}}
+pd=null});
+$('sp').oninput=e=>{power=+e.target.value;ui()};
+$('su').oninput=e=>{curve=+e.target.value;ui()};
+$('sd').oninput=e=>{dir=+e.target.value;ui()};
+$('bs').onclick=shoot;$('br').onclick=reset;
+addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
+if(e.code==='Space'){e.preventDefault();shoot()}
+else if(e.key==='ArrowLeft'){e.preventDefault();dir=Math.min(180,dir+2);ui()}
+else if(e.key==='ArrowRight'){e.preventDefault();dir=Math.max(0,dir-2);ui()}});
+</script>
+</body></html>
